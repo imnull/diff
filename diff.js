@@ -8,8 +8,8 @@ const isEmptyObj = v => {
 }
 
 const TYPE = (a, b) => {
-    let nameA = tname(a), nameB = tname(b);
-    return nameA === nameB ? nameA : '*';
+    let n = tname(a);
+    return n === tname(b) ? n : '*';
 };
 
 const CONTAINS = {
