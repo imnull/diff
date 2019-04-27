@@ -1,20 +1,33 @@
-const { diff, clone } = require('./diff');
+const { diff, clone, intersect, assign } = require('./diff');
 
-const obj = [1,2, {'a': [{bbb:3}, [1,{aaa:2},2,3,]]}];
-const _obj = clone(obj);
-// obj.push(3)
-obj.push(4)
-_obj.push(3)
-// console.log(obj === _obj, contains(obj, _obj), JSON.stringify(_obj), JSON.stringify(obj))
-
-let a = { a: 1, b: 2, c: { a: 1, b: [1,2,3] } };
+let a = { a: 1, b: 2 };
 a.z = a;
-let b = { a: 1, b: 2, c: { a: 1, b: [1,2,4] } };
-let c = { a: 1, b: 2, c: { a: 1, b: [1,2,3] } };
-c.z = b;
+let b = { a: 1, b: 3 };
 b.z = b;
-// console.log(clone(a))
-console.log(diff([1,2,3], [1,3,3]))
-console.log(diff({ a: [1,2,3] }, { a: [1,2,3] }))
-console.log(diff(a, b))
-console.log(diff(obj, _obj))
+console.log('clone', clone(a));
+console.log('clone', clone(b));
+
+console.log('diff', diff(a, b));
+console.log('diff', diff([1,2,3], [1,3,3,7]));
+console.log('diff', diff({a:1,b:2}, {a:1,b:3}));
+console.log('diff', diff({a:1,b:2, c: [1,2,3, { a: 111, b: 222 },4]}, {a:1,b:3, c: [2,2,3, { a: 111, c: 333 },4,5]}));
+
+console.log('intersect', intersect(a, b));
+console.log('intersect', intersect([1,2,3], [1,3,3,7]));
+console.log('intersect', intersect({a:1,b:2}, {a:1,b:3}));
+console.log('intersect', intersect({a:1,b:2, c: [1,2,3, { a: 111, b: 222 },4]}, {a:1,b:3, c: [2,2,3, { a: 111, c: 333 },4,5]}));
+
+console.log('assign', assign([1,2,3], [1,3,3,7]));
+console.log('assign', assign({a:1,b:2}, {a:1,b:3}));
+console.log('assign', assign({a:1,b:2, c: [1,2,3, { a: 111, b: 222 },4]}, {a:1,b:3, c: [2,2,3, { a: 111, c: 333 },4,5]}));
+console.log('assign', assign(a, b, a, b));
+
+
+// let aa = { a: 1 };
+// aa.z = aa;
+// let bb = assign(aa, { b: 2, d: [1,2,3] }, { b: 3, c: 4, d: [-11,12] });
+
+// console.log(bb);
+// console.log(aa)
+// console.log(aa === bb);
+
