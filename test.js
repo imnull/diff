@@ -1,4 +1,25 @@
-const { diff, clone, intersect, assign } = require('./diff');
+const {
+    contains,
+    containsExpand,
+    diff, clone, intersect, assign
+} = require('./diff');
+
+console.log('contains', contains({ a: 1, b: 2 }, { a: 1 })) // true
+console.log('contains', contains({ a: 1, b: 2 }, { a: 1, b: 2 })) // true
+console.log('contains', contains({ a: 1, b: 2 }, { a: 1, b: 3 })) // false
+console.log('contains', contains({ a: 1, b: 2 }, { a: 1, b: 2, c: 3 })) // false
+console.log('contains', contains([1, 2], [1])) // true
+console.log('contains', contains([1, 2], [1, 2])) // true
+console.log('contains', contains([1, 2], [1, 3])) // false
+console.log('contains', contains([1, 2], [1, 2, 3])) // false
+
+console.log('contains', contains(1, 1)) // true
+console.log('contains', contains(1, 2)) // false
+
+containsExpand('String', (a, b) => a.indexOf(b) > -1)
+console.log('contains', contains('abcde', 'bcd')) // true
+
+
 
 let a = { a: 1, b: 2 };
 a.z = a;
