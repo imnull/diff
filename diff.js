@@ -12,6 +12,13 @@ const object_keys = (...objs) => objs
 //     }
 // }
 
+// const is_empty_obj = v => {
+//     for(let p in v){
+//         return false;
+//     }
+//     return true;
+// }
+
 const TYPE = (a, b) => {
     let n = tname(a);
     return n === tname(b) ? n : '*';
@@ -39,14 +46,13 @@ const CONTAINS = {
             return false;
         }
         return bKeys.every(i => contains(a[i], b[i], trap))
-    }
+    },
 };
 const contains = (a, b, trap = []) => {
     let t = TYPE(a, b);
     if(t === '*' || !(t in CONTAINS)){
         return a === b;
     } else {
-        trap.push(b);
         return CONTAINS[t](a, b, trap)
     }
 };
@@ -146,9 +152,11 @@ const INTERSECT = {
             return b;
         }
         trap.push(b);
-        let _a = clone(a);
-        b.forEach((v, i) => intersect(_a[i], v, trap));
-        return _a;
+        let arr = Array(Math.max(a.length, b.length));
+        for(let i = 0; i < arr.length; i++){
+            arr[i] = b.hasOwnProperty(i) ? intersect(a[i], b[i], trap) : clone(a[i])
+        }
+        return arr;
     },
     'Object': (a, b, trap) => {
         if(trap.indexOf(b) > -1){
@@ -222,6 +230,19 @@ const assign = (a, ...args) => {
     }
 }
 
+const expand = (target, methodName, method) => {
+    return target[methodName] = method;
+}
+
 module.exports = {
-    contains, clone, diff, intersect, assign
+    contains,
+    containsExpand: (methodName, method) => expand(CONTAINS, methodName, method),
+    clone, 
+    cloneExpand: (methodName, method) => expand(CLONE, methodName, method),
+    diff,
+    diffExpand: (methodName, method) => expand(DIFF, methodName, method),
+    intersect,
+    intersectExpand: (methodName, method) => expand(INTERSECT, methodName, method),
+    assign,
+    assignExpand: (methodName, method) => expand(ASSIGN, methodName, method),
 };
