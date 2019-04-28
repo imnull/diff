@@ -1,0 +1,25 @@
+{
+  "name": "diffi",
+  "version": "1.0.2",
+  "description": "diff",
+  "main": "diff.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imnull/diff.git"
+  },
+  "keywords": [
+    "javascript",
+    "diff",
+    "object",
+    "deeply-copy"
+  ],
+  "author": "imnull@outlook.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imnull/diff/issues"
+  },
+  "homepage": "https://github.com/imnull/diff#readme"
+}
